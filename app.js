@@ -7,6 +7,7 @@ var bodyParser = require("body-parser");
 var citiesArr = [
         {name: "St. Louis", image: "https://upload.wikimedia.org/wikipedia/commons/d/d0/St._Louis_skyline_September_2008.jpg"},
         {name: "New Orleans", image: "https://upload.wikimedia.org/wikipedia/commons/b/ba/St._Louis_Cathedral_%28New_Orleans%29.jpg"},
+        {name: "Chicago", image: "https://c1.staticflickr.com/5/4248/34001904163_206220b8fd_b.jpg"},
     ]
 
 app.use(bodyParser.urlencoded({extended: true}));
