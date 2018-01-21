@@ -1,0 +1,6 @@
+<h1>These are the cities</h1>
+
+<% data.forEach(function(city){ %>
+    <img src="<%= city["image"] %>"/>
+    <li> <%= city["name"] %></li>
+<% }); %>
