@@ -1,6 +1,12 @@
+<!-- Header -->
+<% include partials/header %>
+
 <h1>These are the cities</h1>
 
-<% data.forEach(function(city){ %>
-    <img src="<%= city["image"] %>"/>
+<% citiesArr.forEach(function(city){ %>
+    <img src="<%= city["image"] %>">
     <li> <%= city["name"] %></li>
 <% }); %>
+
+<!-- Footer -->
+<% include partials/footer %>

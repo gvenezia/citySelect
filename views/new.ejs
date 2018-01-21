@@ -1,0 +1,11 @@
+<% include partials/header %>
+
+<h1>Submit another city:</h1>
+
+<form action="/cities" method="POST">
+    <input name="name" type="text" placeholder="name">
+    <input name="img" type="text" placeholder="image">
+    <button type="submit">Submit!</button>
+</form>
+
+<% include partials/footer %>
