@@ -1,12 +1,18 @@
 <% include partials/header %>
 
-<a href="/cities">Back to the cities list</a>
-<h1>Submit another city:</h1>
-
-<form action="/cities" method="POST">
-    <input name="name" type="text" placeholder="name">
-    <input name="img" type="text" placeholder="image">
-    <button type="submit">Submit!</button>
-</form>
-
+<a class="ml-2" href="/cities">Back to the cities list</a>
+<div class="container">
+    <h1 class="text-center">Submit another city:</h1>
+    
+    <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-6 col-sm-8">
+            <form action="/cities" method="POST">
+                <form class="form-group">
+                    <input class="form-control my-2" name="name" type="text" placeholder="Name">
+                    <input class="form-control my-2" name="img" type="text" placeholder="Image">
+                    <button class="btn btn-success btn-lg btn-block" type="submit">Submit!</button> 
+                </form>
+        </div>
+    </div>
+    
 <% include partials/footer %>
