@@ -15,7 +15,7 @@
     
     <!-- Create a grid of city pics and names -->
     <div class="row text-center" style="display: flex; flex-wrap: wrap">
-        <% citiesArr.forEach(function(city){ %>
+        <% cities.forEach(function(city){ %>
             <div class="col-md-4 col-sm-6">
                 <figure class="figure">
                   <img src="<%= city["image"] %>" class="figure-img img-fluid rounded" alt="A picture of <%= city.name %>">

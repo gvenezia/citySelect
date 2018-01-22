@@ -24,35 +24,51 @@ var citySchema = new mongoose.Schema({
 // Make a Model
 var City = mongoose.model("City", citySchema); 
 
-City.create(
-    {
-        name: "St. Louis",
-        image: "https://upload.wikimedia.org/wikipedia/commons/d/d0/St._Louis_skyline_September_2008.jpg"
-    }, function(err, city){
-        if(err){
-            console.log("Error while creating the city");
-            console.log(err);
-        } else {
-            console.log("Successfully created:");
-            console.log(city);
-        }
-});
+// City.create(
+//     {
+//         name: "New Orleans",
+//         image: "https://upload.wikimedia.org/wikipedia/commons/b/ba/St._Louis_Cathedral_%28New_Orleans%29.jpg"
+//     }, function(err, city){
+//         if(err){
+//             console.log("Error while creating the city");
+//             console.log(err);
+//         } else {
+//             console.log("Successfully created:");
+//             console.log(city);
+//         }
+// });
 
 app.get("/", function(req, res){
    res.render("landing");
 });
 
 app.get("/cities", function(req, res){
-    res.render("cities", {citiesArr: citiesArr});
+    // Get the cities from the DB
+    City.find({}, function(err, DBcities){
+        if(err){
+            console.log("Error while retrieving the cities");
+            console.log(err);
+        } else {
+            res.render("cities", {cities:DBcities});
+        }
+    });
 });
 
 // Allow users to create a new city
 app.post("/cities", function(req, res){
    var name = req.body.name;
-   var img = req.body.img;
+   var image = req.body.image;
+   var newCity = {name:name, image:image}
    
-   citiesArr.push({"name": name, "image": img});
-   res.redirect("/cities");
+   City.create(newCity, function(err, newCity){
+      if(err){
+            console.log("Error while adding a city");
+            console.log(err);
+        } else {
+           // Redirect   
+           res.redirect("/cities");
+        }
+   });
 });
 
 app.get("/cities/new", function(req, res) {
