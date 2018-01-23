@@ -59,9 +59,10 @@ app.get("/cities", function(req, res){
 
 // CREATE Route - Allow users to create a new city
 app.post("/cities", function(req, res){
-   var name = req.body.name;
-   var image = req.body.image;
-   var newCity = {name:name, image:image}
+   var  name        = req.body.name,
+        image       = req.body.image,
+        description = req.body.description,
+        newCity     = {name:name, image:image, description:description};
    
    City.create(newCity, function(err, newCity){
       if(err){
