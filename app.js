@@ -15,10 +15,11 @@ mongoose.connect("mongodb://localhost/citySelect");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
-// Set up Schema
+// SHEMA SETUP
 var citySchema = new mongoose.Schema({
    name: String,
-   image: String
+   image: String,
+   description: String
 });
 
 // Make a Model
@@ -27,7 +28,8 @@ var City = mongoose.model("City", citySchema);
 // City.create(
 //     {
 //         name: "New Orleans",
-//         image: "https://upload.wikimedia.org/wikipedia/commons/b/ba/St._Louis_Cathedral_%28New_Orleans%29.jpg"
+//         image: "https://upload.wikimedia.org/wikipedia/commons/b/ba/St._Louis_Cathedral_%28New_Orleans%29.jpg",
+//         description: "One of America's liveliest cities, with plenty of unique culture, celebrations, foods, shows, and art.",
 //     }, function(err, city){
 //         if(err){
 //             console.log("Error while creating the city");
@@ -42,6 +44,7 @@ app.get("/", function(req, res){
    res.render("landing");
 });
 
+// INDEX Route - Show all cities
 app.get("/cities", function(req, res){
     // Get the cities from the DB
     City.find({}, function(err, DBcities){
@@ -49,12 +52,12 @@ app.get("/cities", function(req, res){
             console.log("Error while retrieving the cities");
             console.log(err);
         } else {
-            res.render("cities", {cities:DBcities});
+            res.render("index", {cities:DBcities});
         }
     });
 });
 
-// Allow users to create a new city
+// CREATE Route - Allow users to create a new city
 app.post("/cities", function(req, res){
    var name = req.body.name;
    var image = req.body.image;
@@ -71,8 +74,20 @@ app.post("/cities", function(req, res){
    });
 });
 
+// NEW - Shows the form to add a new city
 app.get("/cities/new", function(req, res) {
    res.render("new");
+});
+
+// SHOW - Display a page for a specific city
+app.get("/cities/:id", function(req, res){
+   City.findById(req.params.id, function(err, foundCity){
+      if (err){
+          console.log(err);
+      } else {
+          res.render("show", {city:foundCity});
+      }
+   });
 });
 
 // Check that the server is running successfully

@@ -20,9 +20,9 @@
                 <figure class="figure">
                   <img src="<%= city["image"] %>" class="figure-img img-fluid rounded" alt="A picture of <%= city.name %>">
                   <figcaption class="figure-caption font-weight-bold"> <%= city["name"] %> </figcaption>
+                  <a href="/cities/<%= city._id %>" class="btn btn-sm btn-outline-info">More Info</a> 
                 </figure>
             </div>
-            
         <% }); %>
     </div>
 </div>
