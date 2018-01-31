@@ -5,27 +5,12 @@ var express     = require("express"),
     mongoose    = require("mongoose"),
     City        = require("./models/city.js"),
     seedDB      = require("./seeds.js");
-    
-seedDB();
 
 mongoose.connect("mongodb://localhost/citySelect");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
-// City.create(
-//     {
-//         name: "New Orleans",
-//         image: "https://upload.wikimedia.org/wikipedia/commons/b/ba/St._Louis_Cathedral_%28New_Orleans%29.jpg",
-//         description: "One of America's liveliest cities, with plenty of unique culture, celebrations, foods, shows, and art.",
-//     }, function(err, city){
-//         if(err){
-//             console.log("Error while creating the city");
-//             console.log(err);
-//         } else {
-//             console.log("Successfully created:");
-//             console.log(city);
-//         }
-// });
+seedDB();
 
 app.get("/", function(req, res){
    res.render("landing");
@@ -69,10 +54,14 @@ app.get("/cities/new", function(req, res) {
 
 // SHOW - Display a page for a specific city
 app.get("/cities/:id", function(req, res){
-   City.findById(req.params.id, function(err, foundCity){
+   City.
+    findById(req.params.id).
+    populate('comments').
+    exec( function(err, foundCity){
       if (err){
           console.log(err);
       } else {
+          console.log(foundCity);
           res.render("show", {city:foundCity});
       }
    });

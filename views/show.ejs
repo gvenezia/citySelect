@@ -10,6 +10,14 @@
               <img src="<%= city.image %>" class="figure-img img-fluid rounded" alt="A picture of <%= city.name %>">
               <figcaption class="figure-caption font-weight-bold"> <%= city.description %> </figcaption>
             </figure>
+        <!--Loop for the comments-->
+        <% city.comments.forEach(function(comment){ %>
+            <p>
+                "<%= comment.text %>" <span> — <%= comment.author %></span>
+            </p>
+            
+        <% }); %>
+                
         </div>
     </div>
     

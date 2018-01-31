@@ -2,12 +2,7 @@ var mongoose = require("mongoose");
 var City = require("./models/city");
 var Comment   = require("./models/comment");
 
-function seedDB(){
-    City.remove({}, function(err){
-              
-    });
-};
-
+// Data set for the cities
 var data = [
         {
             name: "St. Louis", 
@@ -27,44 +22,39 @@ var data = [
 ]
 
 function seedDB(){
-   //Remove all campgrounds
-   Campground.remove({}, function(err){
-        if(err){
-            console.log(err);
-        }
-        console.log("removed campgrounds!");
-        Comment.remove({}, function(err) {
-            if(err){
-                console.log(err);
-            }
-            console.log("removed comments!");
-             //add a few campgrounds
-            data.forEach(function(seed){
-                Campground.create(seed, function(err, campground){
-                    if(err){
-                        console.log(err)
-                    } else {
-                        console.log("added a campground");
-                        //create a comment
-                        Comment.create(
-                            {
-                                text: "This place is great, but I wish there was internet",
-                                author: "Homer"
-                            }, function(err, comment){
-                                if(err){
-                                    console.log(err);
-                                } else {
-                                    campground.comments.push(comment._id);
-                                    campground.save();
-                                    console.log("Created new comment");
-                                }
-                            });
-                    }
-                });
-            });
-        });
-    }); 
-    //add a few comments
-}
+    City.remove({}, function(err){
+        if (err){
+            console.log(err)
+        } 
+        console.log("City objects successfully removed");
+        
+        // After removal 
+        // add some City objects
+        data.forEach(function(seed) {
+            City.create(seed, function(err, newCity){
+                if (err){
+                    console.log(err);
+                } else {
+                    console.log('added a campground');
+                    
+                    // Add a comment to the city
+                    Comment.create({
+                                        text: "I lived here",
+                                        author: 'Gaetano'
+                                  }, function(err, newComment){
+                                      if (err){
+                                          console.log(err);
+                                      } else {
+                                          newCity.comments.push(newComment);
+                                          newCity.save();
+                                          console.log("new comment created!");
+                                      }
+                                  });
+                } // end else
+            }); // end City.create
+        }); // end .forEach add
+    }); // end remove
+}; // End seedDB
 
+// Export
 module.exports = seedDB;
