@@ -1,15 +1,40 @@
 .navbar-inverse .navbar-brand {
     font-family: Pacifico;
-    font-size: 2rem;
+    font-size: 2.5rem;
+    padding: 6px;
+    background: linear-gradient(to right, #ffeded, white);
+        background-position-x: initial;
+        background-position-y: initial;
+        background-size: initial;
+        background-repeat-x: initial;
+        background-repeat-y: initial;
+        background-attachment: initial;
+        background-origin: initial;
+        background-color: initial;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     
-/* Trying to add a gradient to the lettering
-    /*color: transparent;*/
-    /*background: linear-gradient(red, yellow);*/
-    /*background-clip: text; */ 
-    /* Deprecated ? not border-box? */
+}
+
+/* Id's sorted alphabetically */
+
+#landing {
+    font-family: Pacifico;
+}
+
+.container #landing-container {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+}
+
+#landing-image {
+    width: 100%;
 }
 
 #main-nav {
     background-color: #384151;
+    padding: 2px;
 }
 
