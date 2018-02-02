@@ -1,0 +1,62 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="row">
+        <!-- Smaller column with navigation -->
+        <div class="col-md-3">
+            <h2 class="lead"><%= city.name %></h2>
+            <div class="list-group">
+                <li class="list-group-item active">Nav 1</li>
+                <li class="list-group-item">Nav 2</li>
+                <li class="list-group-item">Nav 3</li>
+            </div>
+        </div>
+        
+        <!-- Larger column with the main content -->
+        <div class="col-md-9">
+            <!-- City Image -->
+            <figure class="figure">
+              <img src="<%= city.image %>" class="figure-img img-fluid rounded" alt="A picture of <%= city.name %>">
+            </figure>
+            
+            <!--Sub-columns w/ City name, description, CPI Index and other basic stats-->
+            <div class="row">
+                <div class="col-md-8">
+                    <h3 class="text-left"><%= city.name %></h3>
+                    <p class="text-left"><%= city.description %></p>
+                </div>
+                <div class="col-md-4">
+                    CPI: 82.5
+                </div>
+            </div>
+            
+            <!-- Comments -->
+            <div class="container bg-faded">
+                <!--Button to add a comment-->
+                <a href="/cities/<%= city._id %>/comments/new" class="btn btn-sm btn-info">Add a comment</a>
+                <hr />
+                <!--Loop for the comments-->
+                <% city.comments.forEach(function(comment){ %>
+                    <div class="row">
+                        <div class="col-12">
+                            Rating: 5 ——
+                            <strong> <%= comment.author %> </strong>
+                            <span class="float-right">1 day ago</span>
+                            <p>
+                                "<%= comment.text %>"
+                            </p>
+                        </div>
+                    </div>
+                <% }); %>
+                
+            </div>
+        </div> <!-- End Subcolumn -->
+    </div> <!-- End main row/columns -->
+</div> <!-- End main page container -->
+    
+    
+    
+</div>  <!-- End container -->
+
+<!--Footer -->
+<% include ../partials/footer %>

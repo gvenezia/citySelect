@@ -1,0 +1,15 @@
+.navbar-inverse .navbar-brand {
+    font-family: Pacifico;
+    font-size: 2rem;
+    
+/* Trying to add a gradient to the lettering
+    /*color: transparent;*/
+    /*background: linear-gradient(red, yellow);*/
+    /*background-clip: text; */ 
+    /* Deprecated ? not border-box? */
+}
+
+#main-nav {
+    background-color: #384151;
+}
+
