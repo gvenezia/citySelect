@@ -30,11 +30,22 @@
 }
 
 #landing-image {
+    position: relative;
     width: 100%;
+}
+
+#landing-text {
+   position: absolute; 
+   top: 200px; 
+   left: 0; 
+   width: 100%; 
+   margin: 0px 30px;
+   color: white;
 }
 
 #main-nav {
     background-color: #384151;
     padding: 2px;
+    margin-bottom: 0px;
 }
 
