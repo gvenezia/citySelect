@@ -1,0 +1,21 @@
+<% include partials/header %>
+
+<!-- Register username and password-->
+<a class="ml-2" href="/">Back to the home page </a>
+<div class="container">
+    <h1 class="text-center">Register:</h1>
+    
+    <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-6 col-sm-8">
+            <form action="/register" method="POST">
+                <form class="form-group">
+                    <input class="form-control my-2" name="username" type="text" placeholder="Username">
+                    <input class="form-control my-2" name="password" type="password" placeholder="Password">
+                    <button class="btn btn-success btn-lg btn-block" type="submit">Submit</button> 
+                </form>
+            </form>
+        </div>
+    </div>
+</div>
+
+<% include partials/footer %>

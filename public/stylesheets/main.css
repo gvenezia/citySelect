@@ -23,6 +23,10 @@
     font-family: Pacifico;
 }
 
+.container {
+    margin-top: 25px;
+}
+
 .container #landing-container {
     margin: 0px;
     padding: 0px;
