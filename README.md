@@ -3,7 +3,7 @@
 **What is it?**
 A city review site that helps users better plan their next vacation or move.
 
-**User stories:**
+**User stories**
 ..- Unaccustomed users are greeted by a landing page that gives a short explanation of the website and a link to view all the cities
 ..- Travelers can quickly check different cities to learn more about it and see if there are comments about good places to visit
 ..- Travelers can share hot tips about where to stay, what to see, and what to do
@@ -18,7 +18,7 @@ I also make use of ejs, mongoose, a modular file structure, and RESTful routing.
 
 Passport, passport-local, and passport-local-mongoose handle the authentication.
 
-**To-do:**
+**To-do**
 ..- add UPDATE and DESTROY routes
 ..- UI improvements
 ..- Refactor
