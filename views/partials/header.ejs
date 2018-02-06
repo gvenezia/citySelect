@@ -29,25 +29,46 @@
         <!--Navbar items-->
         <nav class="collapse navbar-collapse">
             <!--Brand-->
-            <a class="navbar-brand" href="/">City Select</a>
+            <a class="navbar-brand ml-2" href="/">City Select</a>
             
-            <!-- Right-justified Login/Register Form-->
-            <form class="navbar-nav form-inline ml-auto">
-                <!--Login-->
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
-                  <input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
-                </div>
-                <button class="btn btn-outline-success m-1 m-sm-1" type="submit">
-                  Login <i class="fas fa-sign-in-alt"></i>
-                </button>
-                
-                <!--Register-->
-                <a href="/register" class="btn btn-outline-warning m-1 m-sm-1" role="button">
+            <!-- Right-justified Login/Register/Logout -->
+            <!-- Display depends on whether the user is logged in or not -->
+            
+            <% if (user === undefined){ %>
+              <!-- Login Form -->
+              <form class="navbar-nav form-inline ml-auto" action="/login" method="POST">
+                  <div class="input-group">
+                    <input type="text" class="form-control" name="username" placeholder="Username" aria-describedby="basic-addon1">
+                    <input type="password" class="form-control" name="password" placeholder="Password" aria-describedby="basic-addon1">
+                  </div>
+                  <button class="btn btn-success m-1 m-sm-1" type="submit">
+                    Login <i class="fas fa-sign-in-alt"></i>
+                  </button>
+              </form> 
+              
+              <!-- Register Link Button -->
+              <div class="navbar-nav form-inline ml-0 mr-4">
+                <a href="/register" class="btn btn-warning m-1 m-sm-1" role="button">
                   Register <i class="fas fa-user-plus"></i>
                 </a>
-                
-            </form>   
+              </div>
+              
+            <% } else { %>
+              
+              <!-- Welcome the user by name -->
+              <div class="navbar-nav form-inline ml-auto mr-2">
+                  <span class="navbar-text">
+                    You're signed-in as <strong> <%= user.username %></strong>
+                  </span>
+              </div>
+              
+              <form class="navbar-nav form-inline ml-0 mr-4" action="/logout" method="GET">
+                  <button class="btn btn-warning m-1 m-sm-1" type="submit">
+                    Logout <i class="fas fa-sign-in-alt"></i>
+                  </button>
+              </form> 
+              
+              <% }; %>
             
         </nav> <!-- End Navbar items -->
         

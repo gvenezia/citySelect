@@ -32,6 +32,13 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// ==== set res.locals middleware ====
+app.use(function(req, res, next){
+   res.locals.user = req.user;
+   next();
+});
+
+
 // ============ ROUTES ===============
 // Root Route
 app.get("/", function(req, res){
@@ -52,8 +59,8 @@ app.get("/cities", function(req, res){
 });
 
 // NEW - Shows the form to add a new city
-app.get("/cities/new", function(req, res) {
-   res.render("cities/new");
+app.get("/cities/new", function(req, res){
+    res.render("cities/new");
 });
 
 // CREATE Route - Allow users to create a new city
@@ -61,7 +68,7 @@ app.post("/cities", function(req, res){
    var  name        = req.body.name,
         image       = req.body.image,
         description = req.body.description,
-        newCity     = {name:name, image:image, description:description};
+        newCity     = {name, image, description};
    
    City.create(newCity, function(err, newCity){
       if(err){
@@ -76,16 +83,16 @@ app.post("/cities", function(req, res){
 
 // SHOW - Display a page for a specific city
 app.get("/cities/:id", function(req, res){
-   City.
-    findById(req.params.id).
-    populate('comments').
-    exec( function(err, foundCity){
-      if (err){
-          console.log(err);
-      } else {
-          res.render("cities/show", {city:foundCity});
-      }
-   });
+    City.
+        findById(req.params.id).
+        populate('comments').
+        exec( function(err, foundCity){
+            if (err){
+                console.log(err);
+            } else {
+                res.render("cities/show", {city:foundCity});
+            }
+        });
 });
 
 // RESTFUL ROUTES NEEDED:
@@ -98,7 +105,7 @@ app.get("/cities/:id", function(req, res){
 // ===================
 
 // NEW comment
-app.get("/cities/:id/comments/new", function(req, res){
+app.get("/cities/:id/comments/new", isLoggedIn, function(req, res){
    City.findById(req.params.id, function(err, foundCity){
        if (err){
            console.log(err);
@@ -109,11 +116,10 @@ app.get("/cities/:id/comments/new", function(req, res){
 });
 
 // CREATE comment
-app.post("/cities/:id/comments", function(req, res){
+app.post("/cities/:id/comments", isLoggedIn, function(req, res){
     City.findById(req.params.id, function(err, foundCity){
         if (err) {
             console.log(err);
-            alert("Error: could not retrieve city id");
             res.redirect("/cities");
         } else {
             Comment.create(req.body.comment, function(err, newComment){
@@ -162,6 +168,43 @@ app.post('/register', function(req, res){
    });
 });
 
+// Login routes
+app.get('/login', function(req, res){
+   // if no info inputted, redirect request to the referer
+    res.redirect('back');
+});
+
+// Login post route
+app.post('/login', passport.authenticate('local', 
+    {
+        successRedirect: "/cities",
+        failureRedirect: "/login"
+    }), function(req, res){ }); // Empty callback to show that it is possible (unnecessary for now)
+
+// logout
+app.get('/logout', function(req, res){
+    req.logout(); 
+    res.redirect('/');
+});
+
+// =========== Functions ==============
+// Check for login
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    // if the user isn't logged in, redirect request to the referer
+    res.redirect('back');
+};
+
+// ===========================
+// Handle a 404 error
+app.use(function (req, res, next) {
+  res.status(404).send("404 Error: Sorry can't find that!");
+});
+
+
+// ===========================
 
 // Check that the server is running successfully
 app.listen(process.env.PORT, process.env.IP, function(){

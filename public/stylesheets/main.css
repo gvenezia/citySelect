@@ -1,3 +1,35 @@
+/* HTML Elements sorted alphabetically */
+html, body {
+    height: 100%;
+}
+
+footer {
+    
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+    background-color: #384151;
+    color: #C0C5CD;
+}
+
+footer a {
+    color: #C0C5CD;
+}
+
+
+/* classes sorted alphabetically */
+.container {
+    margin-top: 25px;
+}
+
+.content-container {
+    margin-bottom: 50px;
+}
+
+.navbar-nav .form-control {
+    background-color: #DCE2EB;
+}
+
 .navbar-inverse .navbar-brand {
     font-family: Pacifico;
     font-size: 2.5rem;
@@ -17,15 +49,14 @@
     
 }
 
+
 /* Id's sorted alphabetically */
 
 #landing {
     font-family: Pacifico;
 }
 
-.container {
-    margin-top: 25px;
-}
+
 
 .container #landing-container {
     margin: 0px;
@@ -52,4 +83,3 @@
     padding: 2px;
     margin-bottom: 0px;
 }
-
