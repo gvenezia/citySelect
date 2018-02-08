@@ -4,7 +4,6 @@ html, body {
 }
 
 footer {
-    
     width: 100%;
     bottom: 0;
     text-align: center;
@@ -56,9 +55,7 @@ footer a {
     font-family: Pacifico;
 }
 
-
-
-.container #landing-container {
+#landing-container {
     margin: 0px;
     padding: 0px;
     width: 100%;
@@ -73,7 +70,7 @@ footer a {
    position: absolute; 
    top: 200px; 
    left: 0; 
-   width: 100%; 
+   width: auto; 
    margin: 0px 30px;
    color: white;
 }
