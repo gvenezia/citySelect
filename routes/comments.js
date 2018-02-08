@@ -25,10 +25,18 @@ router.post("/", isLoggedIn, function(req, res){
             console.log(err);
             res.redirect("/cities");
         } else {
+            // Create the new comment with the submitted info in req.body.comment
             Comment.create(req.body.comment, function(err, newComment){
                 if (err){
                     console.log(err)
                 } else {
+                    // Assign the username and id to the Comment
+                    newComment.author.id = req.user._id;
+                    newComment.author.username = req.user.username;
+                    
+                    // Save the new information in the comment
+                    newComment.save();
+                    
                     // push the newComment and save it
                     foundCity.comments.push(newComment);
                     foundCity.save();

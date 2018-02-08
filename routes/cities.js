@@ -30,9 +30,14 @@ router.post("/", function(req, res){
    var  name        = req.body.name,
         image       = req.body.image,
         description = req.body.description,
-        newCity     = {name, image, description};
+        author      =   {
+                            id: req.user._id,
+                            username: req.user.username
+                        },
+        // Pass all the new variables into the newCity
+        newCity     = {name, image, description, author};
    
-   City.create(newCity, function(err, newCity){
+   City.create(newCity, function(err, createdCity){
       if(err){
             console.log("Error while adding a city");
             console.log(err);

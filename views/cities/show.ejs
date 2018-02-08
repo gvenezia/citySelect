@@ -26,7 +26,8 @@
                     <p class="text-left"><%= city.description %></p>
                 </div>
                 <div class="col-md-4">
-                    CPI: 82.5
+                    <p>CPI: 82.5</p>
+                    <p>Submitted by: <%= city.author.username %></p>
                 </div>
             </div>
             
@@ -40,7 +41,7 @@
                     <div class="row">
                         <div class="col-12">
                             Rating: 5 ——
-                            <strong> <%= comment.author %> </strong>
+                            <strong> <%= comment.author.username %> </strong>
                             <span class="float-right">1 day ago</span>
                             <p>
                                 "<%= comment.text %>"
