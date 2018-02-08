@@ -1,5 +1,6 @@
 // Express
 var express = require('express'),
+    mongoose= require('mongoose'),
     router  = express.Router();
     
 // Models
@@ -10,7 +11,7 @@ var City    = require("../models/city"),
 // INDEX Route - Show all cities
 router.get("/", function(req, res){
     // Get the cities from the DB
-    City.find({}, function(err, DBcities){
+    City.find({}, function(err, DBcities) {
         if(err){
             console.log("Error while retrieving the cities");
             console.log(err);
@@ -21,12 +22,12 @@ router.get("/", function(req, res){
 });
 
 // NEW - Shows the form to add a new city
-router.get("/new", function(req, res){
+router.get("/new", isLoggedIn, function(req, res) {
     res.render("cities/new");
 });
 
 // CREATE Route - Allow users to create a new city
-router.post("/", function(req, res){
+router.post("/", isLoggedIn, function(req, res){
    var  name        = req.body.name,
         image       = req.body.image,
         description = req.body.description,
@@ -35,9 +36,9 @@ router.post("/", function(req, res){
                             username: req.user.username
                         },
         // Pass all the new variables into the newCity
-        newCity     = {name, image, description, author};
+        newCity     = {name:name, image:image, description:description, author:author};
    
-   City.create(newCity, function(err, createdCity){
+   City.create(newCity, function(err, createdCity) {
       if(err){
             console.log("Error while adding a city");
             console.log(err);
@@ -53,7 +54,7 @@ router.get("/:id", function(req, res){
     City.
         findById(req.params.id).
         populate('comments').
-        exec( function(err, foundCity){
+        exec( function(err, foundCity) {
             if (err){
                 console.log(err);
             } else {
@@ -62,9 +63,63 @@ router.get("/:id", function(req, res){
         });
 });
 
-// RESTFUL ROUTES NEEDED:
-    // DESTROY
-    // EDIT
-    // UPDATE
+// EDIT Route
+router.get("/:id/edit", function(req, res) {
+    // Check whether the user is logged in
+    if (req.isAuthenticated()){
+        City.findById(req.params.id, function(err, foundCity){
+            if(err){
+                console.log(err);
+                res.redirect("/cities");
+            } else {
+                // Is the user the creator of the city's page?
+                if (foundCity.author.id.equals(req.user._id)){
+                        res.render("cities/edit", {city: foundCity});    
+                } else {
+                    res.send("Sorry, you aren't an authorized user. Users can only edit pages that they created");
+                }
+            }
+        }); // End City.find for logged in user
+    } else {
+        res.send("please log in");
+        console.log("Please log in");
+    }
+});
+
+// UPDATE Route
+router.put("/:id", isLoggedIn, function(req, res) {
+    City.findByIdAndUpdate(req.params.id, req.body.city, function(err, updatedCity) {
+       if (err){
+           console.log(err);
+           res.redirect("/");
+       } else {
+           res.redirect("/cities/" + req.params.id);
+       }
+    });
+});
+
+// DESTROY Route
+router.delete("/:id", function(req, res) {
+  City.findByIdAndRemove(req.params.id, function(err) {
+      if (err){
+          console.log(err);
+          res.redirect('back');
+      } else {
+          res.redirect("cities/index");
+      }
+  });
+});
+
+// =========== Functions ==============
+// Check for login
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    // if the user isn't logged in, redirect request to the referer
+    res.redirect('back');
+};
     
+// ====================
+// EXPORT
 module.exports = router;

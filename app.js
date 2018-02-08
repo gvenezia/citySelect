@@ -2,10 +2,11 @@
 var express         = require("express"), 
     app             = express(),
     bodyParser      = require("body-parser"),
+    methodOverride  = require("method-override"),
     mongoose        = require("mongoose"),
     passport        = require("passport"),
     LocalStrategy   = require("passport-local"),
-    City            = require("./models/city.js"),
+    City            = require("./models/city"),
     Comment         = require("./models/comment"),
     User            = require("./models/user"),
     seedDB          = require("./seeds");
@@ -20,11 +21,12 @@ mongoose.connect("mongodb://localhost/citySelect");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
 
 seedDB();
 
 // ======= CONFIG: Passport ============
-app.use(require('express-session')({
+app.use(require("express-session")({
     secret: "No secrets here, sorry",
     resave: false,
     saveUninitialized: false
@@ -53,7 +55,7 @@ app.get("/", function(req, res){
    res.render("landing");
 });
 
-app.use('/cities', citiesRoutes);
+app.use('/cities/', citiesRoutes);
 app.use('/cities/:id/comments', commentsRoutes);
 app.use(authRoutes);
 

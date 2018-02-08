@@ -1,0 +1,23 @@
+<% include ../partials/header %>
+
+<a class="ml-2" href="/cities">Back to <%= city.name %>'s page </a>
+<div class="container content-container">
+    <h1 class="text-center">Edit the information for <%= city.name %></h1>
+    
+    <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-6 col-sm-8">
+            <form id="edit-form" action="/cities/<%= city._id %>?_method=PUT" method="POST">
+                <form class="form-group">
+                    <input class="form-control my-2" name="city[name]" type="text" value="<%= city.name %>">
+                    <input class="form-control my-2" name="city[image]" type="text" value="<%= city.image %>">
+                    <textarea class="form-control my-2" name="city[description]" type="text" rows="15">
+                        <%= city.description %>
+                    </textarea>
+                    <button class="btn btn-success btn-lg btn-block" type="submit">Submit Changes!</button> 
+                </form>
+            </form>
+        </div>
+    </div>
+</div>
+    
+<% include ../partials/footer %>

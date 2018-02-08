@@ -22,38 +22,39 @@ var data = [
 ]
 
 function seedDB(){
-    City.remove({}, function(err){
-        if (err){
-            console.log(err)
-        } 
-        console.log("City objects successfully removed");
+    // City.remove({}, err => {
+    //     if (err){
+    //         console.log(err)
+    //     } else {
+    //     console.log("City objects successfully removed");
+    //     }
         
-        // After removal 
-        // add some City objects
-        data.forEach(function(seed) {
-            City.create(seed, function(err, newCity){
-                if (err){
-                    console.log(err);
-                } else {
-                    console.log('added a campground');
+        // // After removal 
+        // // add some City objects
+        // data.forEach(function(seed) {
+        //     City.create(seed, function(err, newCity){
+        //         if (err){
+        //             console.log(err);
+        //         } else {
+        //             console.log('added a campground');
                     
-                    // Add a comment to the city
-                    Comment.create({
-                                        text: "I lived here",
-                                        author: 'Gaetano'
-                                  }, function(err, newComment){
-                                      if (err){
-                                          console.log(err);
-                                      } else {
-                                          newCity.comments.push(newComment._id);
-                                          newCity.save();
-                                          console.log("new comment created!");
-                                      }
-                                  });
-                } // end else
-            }); // end City.create
-        }); // end .forEach add
-    }); // end remove
+        //             // Add a comment to the city
+        //             Comment.create({
+        //                                 text: "I lived here",
+        //                                 author: 'Gaetano'
+        //                           }, function(err, newComment){
+        //                               if (err){
+        //                                   console.log(err);
+        //                               } else {
+        //                                   newCity.comments.push(newComment._id);
+        //                                   newCity.save();
+        //                                   console.log("new comment created!");
+        //                               }
+        //                           });
+        //         } // end else
+        //     }); // end City.create
+        // }); // end .forEach add
+    // }); // end remove
 }; // End seedDB
 
 // Export

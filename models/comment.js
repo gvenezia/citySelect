@@ -4,8 +4,8 @@ var commentSchema = mongoose.Schema({
     text: String,
     author: {
         id: {
-            type: mongoose.Schema.Types.CommentId,
-            ref: 'User'
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
         },
         username: String
     }
