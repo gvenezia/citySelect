@@ -64,30 +64,14 @@ router.get("/:id", function(req, res){
 });
 
 // EDIT Route
-router.get("/:id/edit", function(req, res) {
-    // Check whether the user is logged in
-    if (req.isAuthenticated()){
-        City.findById(req.params.id, function(err, foundCity){
-            if(err){
-                console.log(err);
-                res.redirect("/cities");
-            } else {
-                // Is the user the creator of the city's page?
-                if (foundCity.author.id.equals(req.user._id)){
-                        res.render("cities/edit", {city: foundCity});    
-                } else {
-                    res.send("Sorry, you aren't an authorized user. Users can only edit pages that they created");
-                }
-            }
-        }); // End City.find for logged in user
-    } else {
-        res.send("please log in");
-        console.log("Please log in");
-    }
+router.get("/:id/edit", isAuthorizedUser, function(req, res) {
+    City.findById(req.params.id, function(err, foundCity){
+        res.render("cities/edit", {city: foundCity});    
+    }); 
 });
 
 // UPDATE Route
-router.put("/:id", isLoggedIn, function(req, res) {
+router.put("/:id", isAuthorizedUser, function(req, res) {
     City.findByIdAndUpdate(req.params.id, req.body.city, function(err, updatedCity) {
        if (err){
            console.log(err);
@@ -99,7 +83,7 @@ router.put("/:id", isLoggedIn, function(req, res) {
 });
 
 // DESTROY Route
-router.delete("/:id", function(req, res) {
+router.delete("/:id", isAuthorizedUser, function(req, res) {
   City.findByIdAndRemove(req.params.id, function(err) {
       if (err){
           console.log(err);
@@ -119,7 +103,28 @@ function isLoggedIn(req, res, next){
     // if the user isn't logged in, redirect request to the referer
     res.redirect('back');
 };
-    
+
+// Check for authorization to access content
+function isAuthorizedUser(req, res, next){
+    if (req.isAuthenticated()){
+        City.findById(req.params.id, function(err, foundCity){
+            if (err) {
+                res.redirect("back");
+                
+            // Is the user the creator of the city's page?
+            } else if (foundCity.author.id.equals(req.user._id)){ 
+                next();
+                
+            } else {
+                res.redirect("back");
+                
+            }
+        }); // End City.find for logged in user
+    } else {
+        res.redirect("back");
+    }
+}; // End checkForAuthorizedUser
+
 // ====================
 // EXPORT
 module.exports = router;

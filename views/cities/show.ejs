@@ -29,12 +29,15 @@
                     <p>CPI: 82.5</p>
                     <p>Submitted by: <%= city.author.username %></p>
                     <br>
-                    <p>
-                        <a href="/cities/<%= city._id %>/edit" class="btn btn-sm btn-warning">Edit city information</a>
-                    </p>
-                    <form action="/cities/<%= city._id %>?_method=DELETE" method="POST">
-                        <button class="btn btn-sm btn-danger">Delete city</button>
-                    </p>
+                    <!-- Only show the "Edit" and "Delete" buttons if user is authorized -->
+                    <% if (user && city.author.id.equals(user._id)){ %> 
+                        <p>
+                            <a href="/cities/<%= city._id %>/edit" class="btn btn-sm btn-warning">Edit city information</a>
+                        </p>
+                        <form action="/cities/<%= city._id %>?_method=DELETE" method="POST">
+                            <button class="btn btn-sm btn-danger">Delete city</button>
+                        </p>
+                    <% } %>
                 </div>
             </div>
             

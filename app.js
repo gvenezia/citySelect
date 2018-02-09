@@ -40,6 +40,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // ==== set res.locals middleware ====
+// Allows access to the current user on every page of the web site
 app.use(function(req, res, next){
    res.locals.user = req.user;
    next();
