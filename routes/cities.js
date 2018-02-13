@@ -9,7 +9,7 @@ var City    = require("../models/city"),
     User    = require("../models/user");
 
 // INDEX Route - Show all cities
-router.get("/", function(req, res){
+router.get("/", (req, res) => {
     // Get the cities from the DB
     City.find({}, function(err, DBcities) {
         if(err){
@@ -22,7 +22,7 @@ router.get("/", function(req, res){
 });
 
 // NEW - Shows the form to add a new city
-router.get("/new", isLoggedIn, function(req, res) {
+router.get("/new", isLoggedIn, (req, res) => {
     res.render("cities/new");
 });
 
@@ -44,7 +44,7 @@ router.post("/", isLoggedIn, function(req, res){
             console.log(err);
         } else {
            // Redirect   
-           res.redirect("/");
+           res.redirect("/cities");
         }
    });
 });
@@ -66,6 +66,9 @@ router.get("/:id", function(req, res){
 // EDIT Route
 router.get("/:id/edit", isAuthorizedUser, function(req, res) {
     City.findById(req.params.id, function(err, foundCity){
+        if(err){
+            console.log("Error ====\n" + err);
+        }
         res.render("cities/edit", {city: foundCity});    
     }); 
 });
@@ -89,7 +92,7 @@ router.delete("/:id", isAuthorizedUser, function(req, res) {
           console.log(err);
           res.redirect('back');
       } else {
-          res.redirect("cities/index");
+          res.redirect("/cities");
       }
   });
 });
@@ -113,7 +116,7 @@ function isAuthorizedUser(req, res, next){
                 
             // Is the user the creator of the city's page?
             } else if (foundCity.author.id.equals(req.user._id)){ 
-                next();
+                next(); // DON'T RETURN THIS. Caused a CastError problem further down the line
                 
             } else {
                 res.redirect("back");
@@ -125,6 +128,6 @@ function isAuthorizedUser(req, res, next){
     }
 }; // End checkForAuthorizedUser
 
-// ====================
-// EXPORT
+
+// ======= Export to app.js =============
 module.exports = router;

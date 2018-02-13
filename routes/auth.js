@@ -38,7 +38,7 @@ router.get('/login', function(req, res){
 // Login post route
 router.post('/login', passport.authenticate('local', 
     {
-        successRedirect: "/cities",
+        successRedirect: "back",
         failureRedirect: "/login"
     }), function(req, res){ }); // Empty callback to show that it is possible (unnecessary for now)
 
