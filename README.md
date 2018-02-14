@@ -1,4 +1,4 @@
-# City Select (in progress)
+# City Select
 
 ### What is it?
 A city review site that helps users better plan their next vacation or move.
@@ -12,16 +12,13 @@ A city review site that helps users better plan their next vacation or move.
 - Users can sign-up for an account in order to post comments
 
 ### Technologies Used
-Primarily made with MongoDB, Express.js, and Node.js.
+Primarily made with Vanilla JS, MongoDB, Express.js, and Node.js.
 
 I also make use of ejs, mongoose, a modular file structure, and RESTful routing.
 
 Passport, passport-local, and passport-local-mongoose handle the authentication.
 
 ### To-do
-- add UPDATE and DESTROY routes
-- UI improvements
-- Refactor
 - Deploy the app
 
 ![screenshot of the landing page](https://github.com/gvenezia/myWebsite/blob/master/images/citySelect.png)
