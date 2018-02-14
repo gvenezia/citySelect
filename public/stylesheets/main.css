@@ -84,3 +84,7 @@ footer a {
     padding: 2px;
     margin-bottom: 0px;
 }
+
+#new-comment-btn {
+    margin-top: 15px;
+}

@@ -1,17 +1,20 @@
 // Express
-var express = require('express'),
-    mongoose= require('mongoose'),
-    router  = express.Router();
+var express     = require('express'),
+    middleware  = require('../middleware'),
+    mongoose    = require('mongoose'),
+    router      = express.Router();
     
 // Models
 var City    = require("../models/city"),
     Comment = require("../models/comment"),
     User    = require("../models/user");
 
+
+// ================= Routes =====================
 // INDEX Route - Show all cities
 router.get("/", (req, res) => {
     // Get the cities from the DB
-    City.find({}, function(err, DBcities) {
+    City.find({}, (err, DBcities) => {
         if(err){
             console.log("Error while retrieving the cities");
             console.log(err);
@@ -22,12 +25,12 @@ router.get("/", (req, res) => {
 });
 
 // NEW - Shows the form to add a new city
-router.get("/new", isLoggedIn, (req, res) => {
+router.get("/new", middleware.isLoggedIn, (req, res) => {
     res.render("cities/new");
 });
 
 // CREATE Route - Allow users to create a new city
-router.post("/", isLoggedIn, (req, res) => {
+router.post("/", middleware.isLoggedIn, (req, res) => {
    var  name        = req.body.name,
         image       = req.body.image,
         description = req.body.description,
@@ -38,7 +41,7 @@ router.post("/", isLoggedIn, (req, res) => {
         // Pass all the new variables into the newCity
         newCity     = {name:name, image:image, description:description, author:author};
    
-   City.create(newCity, function(err, createdCity) {
+   City.create(newCity, (err, createdCity) => {
       if(err){
             console.log("Error while adding a city");
             console.log(err);
@@ -54,7 +57,7 @@ router.get("/:id", (req, res) => {
     City.
         findById(req.params.id).
         populate('comments').
-        exec( function(err, foundCity) {
+        exec( (err, foundCity) => {
             if (err){
                 console.log(err);
             } else {
@@ -64,8 +67,8 @@ router.get("/:id", (req, res) => {
 });
 
 // EDIT Route
-router.get("/:id/edit", isAuthorizedUser, (req, res) => {
-    City.findById(req.params.id, function(err, foundCity){
+router.get("/:id/edit", middleware.isAuthorizedUser, (req, res) => {
+    City.findById(req.params.id, (err, foundCity) => {
         if(err){
             console.log("Error ====\n" + err);
         }
@@ -74,8 +77,8 @@ router.get("/:id/edit", isAuthorizedUser, (req, res) => {
 });
 
 // UPDATE Route
-router.put("/:id", isAuthorizedUser, (req, res) => {
-    City.findByIdAndUpdate(req.params.id, req.body.city, function(err, updatedCity) {
+router.put("/:id", middleware.isAuthorizedUser, (req, res) => {
+    City.findByIdAndUpdate(req.params.id, req.body.city, (err, updatedCity) => {
        if (err){
            console.log(err);
            res.redirect("/");
@@ -86,8 +89,8 @@ router.put("/:id", isAuthorizedUser, (req, res) => {
 });
 
 // DESTROY Route
-router.delete("/:id", isAuthorizedUser, (req, res) => {
-  City.findByIdAndRemove(req.params.id, function(err) {
+router.delete("/:id", middleware.isAuthorizedUser, (req, res) => {
+  City.findByIdAndRemove(req.params.id, (err) => {
       if (err){
           console.log(err);
           res.redirect('back');
@@ -97,37 +100,8 @@ router.delete("/:id", isAuthorizedUser, (req, res) => {
   });
 });
 
-// =========== Functions ==============
-// Check for login
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    // if the user isn't logged in, redirect request to the referer
-    res.redirect('back');
-};
-
-// Check for authorization to access content
-function isAuthorizedUser(req, res, next){
-    if (req.isAuthenticated()){
-        City.findById(req.params.id, function(err, foundCity){
-            if (err) {
-                res.redirect("back");
-                
-            // Is the user the creator of the city's page?
-            } else if (foundCity.author.id.equals(req.user._id)){ 
-                next(); // DON'T RETURN THIS. Caused a CastError problem further down the line
-                
-            } else {
-                res.redirect("back");
-                
-            }
-        }); // End City.find for logged in user
-    } else {
-        res.redirect("back");
-    }
-}; // End checkForAuthorizedUser
-
+// ======== Handle Promise rejections ======
+process.on('unhandledRejection', err => console.log(err.stack));
 
 // ======= Export to app.js =============
 module.exports = router;

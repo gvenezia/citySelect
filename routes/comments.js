@@ -1,15 +1,18 @@
 // Express
-var express = require('express'),
-    router  = express.Router({mergeParams: true});
+var express     = require('express'),
+    middleware  = require('../middleware'),
+    router      = express.Router({mergeParams: true});
+    
     
 // Models
-var City    = require("../models/city"),
-    Comment = require("../models/comment"),
-    User    = require("../models/user");
+var City    = require('../models/city'),
+    Comment = require('../models/comment'),
+    User    = require('../models/user');
     
+// ================= Routes =====================
 // NEW comment
-router.get("/new", isLoggedIn, function(req, res){
-   City.findById(req.params.id, function(err, foundCity){
+router.get("/new", middleware.isLoggedIn, (req, res) => {
+   City.findById(req.params.id, (err, foundCity) => {
        if (err){
            console.log(err);
        } else {
@@ -19,14 +22,14 @@ router.get("/new", isLoggedIn, function(req, res){
 });
 
 // CREATE comment
-router.post("/", isLoggedIn, function(req, res){
-    City.findById(req.params.id, function(err, foundCity){
+router.post("/", middleware.isLoggedIn, (req, res) => {
+    City.findById(req.params.id, (err, foundCity) => {
         if (err) {
             console.log(err);
             res.redirect("/cities");
         } else {
             // Create the new comment with the submitted info in req.body.comment
-            Comment.create(req.body.comment, function(err, newComment){
+            Comment.create(req.body.comment, (err, newComment) => {
                 if (err){
                     console.log("cannot create comment \n");
                     console.log(err)
@@ -51,7 +54,7 @@ router.post("/", isLoggedIn, function(req, res){
 }); // End create comment route
 
 // EDIT Route
-router.get("/:comment_id/edit", isAuthorizedCommenter, (req, res) => {
+router.get("/:comment_id/edit", middleware.isAuthorizedCommenter, (req, res) => {
     Comment.findById(req.params.comment_id, (err, foundComment) => {
         if(err){
             console.log("Error ====\n" + err);
@@ -63,8 +66,8 @@ router.get("/:comment_id/edit", isAuthorizedCommenter, (req, res) => {
 });
 
 // // UPDATE Route 
-router.put("/:comment_id", isAuthorizedCommenter, (req, res) => {
-    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updatedComment) {
+router.put("/:comment_id", middleware.isAuthorizedCommenter, (req, res) => {
+    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, updatedComment) => {
        if (err){
            console.log(err);
            res.redirect("/");
@@ -75,7 +78,7 @@ router.put("/:comment_id", isAuthorizedCommenter, (req, res) => {
 }); 
 
 // DESTROY Route
-router.delete("/:comment_id", isAuthorizedCommenter, (req, res) => {
+router.delete("/:comment_id", middleware.isAuthorizedCommenter, (req, res) => {
    Comment.findByIdAndRemove(req.params.comment_id, (err) => {
       if (err){
           console.log(err);
@@ -85,41 +88,6 @@ router.delete("/:comment_id", isAuthorizedCommenter, (req, res) => {
       }
   });
 });
-
-
-
-// =========== Functions ==============
-// Check for login
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        next();
-    } else { // make sure the else is here, otherwise you'll get a "Can't set headers error" https://stackoverflow.com/questions/7042340/error-cant-set-headers-after-they-are-sent-to-the-client 
-    // if the user isn't logged in, redirect request to the referer
-    res.redirect('back');
-    }
-};
-
-// Check for authorization to access content
-function isAuthorizedCommenter(req, res, next){
-    if (req.isAuthenticated()){
-        Comment.findById(req.params.comment_id, function(err, foundComment){
-            if (err) {
-                res.redirect("back");
-                
-            // Is the user the creator of the comment?
-            } else if (foundComment.author.id.equals(req.user._id)){ 
-                next(); // DON'T RETURN THIS. Caused a CastError problem further down the line
-                
-            } else {
-                res.redirect("back");
-                
-            }
-        }); // End Comment.find for logged in user
-    } else {
-        res.redirect("back");
-    }
-}; // End checkForAuthorizedUser
-
 
 // ======== Handle Promise rejections ======
 process.on('unhandledRejection', err => console.log(err.stack));
