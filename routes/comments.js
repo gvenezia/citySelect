@@ -39,7 +39,7 @@ router.post("/", isLoggedIn, function(req, res){
                     newComment.save();
                     
                     // push the newComment and save it
-                    foundCity.comments.push(newComment);
+                    foundCity.comments.push(newComment._id);
                     foundCity.save();
                     
                     // Redirect to the appropriate city's show page
@@ -51,18 +51,40 @@ router.post("/", isLoggedIn, function(req, res){
 }); // End create comment route
 
 // EDIT Route
-// router.get("/edit", (req, res) => {
-//     res.send("comment edit route");
-    
-// });
+router.get("/:comment_id/edit", isAuthorizedCommenter, (req, res) => {
+    Comment.findById(req.params.comment_id, (err, foundComment) => {
+        if(err){
+            console.log("Error ====\n" + err);
+        } else {
+            res.render("comments/edit", {city_id: req.params.id, comment: foundComment});          
+        }
+        
+    }); 
+});
 
 // // UPDATE Route 
-// router.put("/", () => {
-    
-// });
-
+router.put("/:comment_id", isAuthorizedCommenter, (req, res) => {
+    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updatedComment) {
+       if (err){
+           console.log(err);
+           res.redirect("/");
+       } else {
+           res.redirect("/cities/" + req.params.id );
+       }
+    });
+}); 
 
 // DESTROY Route
+router.delete("/:comment_id", isAuthorizedCommenter, (req, res) => {
+   Comment.findByIdAndRemove(req.params.comment_id, (err) => {
+      if (err){
+          console.log(err);
+          res.redirect('back');
+      } else {
+          res.redirect("/cities/" + req.params.id);
+      }
+  });
+});
 
 
 
@@ -78,26 +100,29 @@ function isLoggedIn(req, res, next){
 };
 
 // Check for authorization to access content
-function isAuthorizedUser(req, res, next){
+function isAuthorizedCommenter(req, res, next){
     if (req.isAuthenticated()){
-        City.findById(req.params.id, function(err, foundCity){
+        Comment.findById(req.params.comment_id, function(err, foundComment){
             if (err) {
                 res.redirect("back");
                 
-            // Is the user the creator of the city's page?
-            } else if (foundCity.author.id.equals(req.user._id)){ 
+            // Is the user the creator of the comment?
+            } else if (foundComment.author.id.equals(req.user._id)){ 
                 next(); // DON'T RETURN THIS. Caused a CastError problem further down the line
                 
             } else {
                 res.redirect("back");
                 
             }
-        }); // End City.find for logged in user
+        }); // End Comment.find for logged in user
     } else {
         res.redirect("back");
     }
 }; // End checkForAuthorizedUser
 
+
+// ======== Handle Promise rejections ======
+process.on('unhandledRejection', err => console.log(err.stack));
 
 // ======= Export to app.js =============
 module.exports = router;

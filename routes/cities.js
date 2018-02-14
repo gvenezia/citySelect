@@ -27,7 +27,7 @@ router.get("/new", isLoggedIn, (req, res) => {
 });
 
 // CREATE Route - Allow users to create a new city
-router.post("/", isLoggedIn, function(req, res){
+router.post("/", isLoggedIn, (req, res) => {
    var  name        = req.body.name,
         image       = req.body.image,
         description = req.body.description,
@@ -50,7 +50,7 @@ router.post("/", isLoggedIn, function(req, res){
 });
 
 // SHOW - Display a page for a specific city
-router.get("/:id", function(req, res){
+router.get("/:id", (req, res) => {
     City.
         findById(req.params.id).
         populate('comments').
@@ -64,7 +64,7 @@ router.get("/:id", function(req, res){
 });
 
 // EDIT Route
-router.get("/:id/edit", isAuthorizedUser, function(req, res) {
+router.get("/:id/edit", isAuthorizedUser, (req, res) => {
     City.findById(req.params.id, function(err, foundCity){
         if(err){
             console.log("Error ====\n" + err);
@@ -74,7 +74,7 @@ router.get("/:id/edit", isAuthorizedUser, function(req, res) {
 });
 
 // UPDATE Route
-router.put("/:id", isAuthorizedUser, function(req, res) {
+router.put("/:id", isAuthorizedUser, (req, res) => {
     City.findByIdAndUpdate(req.params.id, req.body.city, function(err, updatedCity) {
        if (err){
            console.log(err);
@@ -86,7 +86,7 @@ router.put("/:id", isAuthorizedUser, function(req, res) {
 });
 
 // DESTROY Route
-router.delete("/:id", isAuthorizedUser, function(req, res) {
+router.delete("/:id", isAuthorizedUser, (req, res) => {
   City.findByIdAndRemove(req.params.id, function(err) {
       if (err){
           console.log(err);

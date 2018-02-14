@@ -4,6 +4,7 @@ html, body {
 }
 
 footer {
+    position: relative;
     width: 100%;
     bottom: 0;
     text-align: center;
@@ -50,6 +51,9 @@ footer a {
 
 
 /* Id's sorted alphabetically */
+#comment-text {
+    display: inline;
+}
 
 #landing {
     font-family: Pacifico;

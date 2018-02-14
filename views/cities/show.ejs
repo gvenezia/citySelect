@@ -36,6 +36,7 @@
                         </p>
                         <form action="/cities/<%= city._id %>?_method=DELETE" method="POST">
                             <button class="btn btn-sm btn-danger">Delete city</button>
+                        </form>
                         </p>
                     <% } %>
                 </div>
@@ -46,16 +47,34 @@
                 <!--Button to add a comment-->
                 <a href="/cities/<%= city._id %>/comments/new" class="btn btn-sm btn-info">Add a comment</a>
                 <hr />
+                
                 <!--Loop for the comments-->
                 <% city.comments.forEach(function(comment){ %>
                     <div class="row">
                         <div class="col-12">
-                            Rating: 5 ——
-                            <strong> <%= comment.author.username %> </strong>
-                            <span class="float-right">1 day ago</span>
-                            <p>
-                                "<%= comment.text %>"
+                            <strong> <%= comment.author.username %>: </strong>
+                            <span class="float-right"><em>1 day ago</em></span>
+                            <br>
+                            <p id="comment-text">
+                                &emsp; "<%= comment.text %>"
+                                
+                                <!-- Only show the "Edit" and "Delete" buttons if user is authorized -->
+                                <% if (user && comment.author.id.equals(user._id)){ %> 
+                                    <form id="delete-comment-form" 
+                                          class="float-right"
+                                          action="/cities/<%= city._id %>/comments/<%= comment._id %>?_method=DELETE" 
+                                          method="POST">
+                                        
+                                        <a  href="/cities/<%= city._id %>/comments/<%= comment._id %>/edit" 
+                                            class="btn btn-sm btn-warning">
+                                            Edit Comment
+                                        </a>
+                                        <button class="btn btn-sm btn-danger">Delete Comment</button>
+                                    </form>
+                                <% } %>
                             </p>
+                            <br>
+                            <br>
                         </div>
                     </div>
                 <% }); %>
