@@ -1,7 +1,9 @@
 <% include ../partials/header %>
 
 <!--Add a comment-->
-<a class="ml-2" href="/cities/<%= city._id %>">Back to <%= city.name %>'s page </a>
+<a class="ml-2" href="/cities/<%= city._id %>">
+    <i class="fas fa-chevron-circle-left"></i> Back to <%= city.name %>'s page 
+</a>
 <div class="container content-container">
     <h1 class="text-center">Add a comment:</h1>
     

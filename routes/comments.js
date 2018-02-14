@@ -45,7 +45,8 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
                     foundCity.comments.push(newComment._id);
                     foundCity.save();
                     
-                    // Redirect to the appropriate city's show page
+                    // Redirect to the appropriate city's show page with 'success' flash message
+                    req.flash("success", "Successfully added your comment");
                     res.redirect("/cities/" + foundCity._id);   
                 }
             }); // End Comment.create()
@@ -84,6 +85,7 @@ router.delete("/:comment_id", middleware.isAuthorizedCommenter, (req, res) => {
           console.log(err);
           res.redirect('back');
       } else {
+          req.flash("success", "Comment deleted successfully");
           res.redirect("/cities/" + req.params.id);
       }
   });

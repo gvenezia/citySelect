@@ -21,9 +21,11 @@ router.post('/register', (req, res) => {
    User.register(newUser, req.body.password, (err, user) => {
       if (err){
           console.log(err);
-          return res.render('register');
+          req.flash('error', err.message);
+          return res.redirect('/register');
       } else {
           passport.authenticate('local')(req, res, () => {
+             req.flash('success', 'Welcome, ' + user.username);
              res.redirect('/cities');
           });
       }
@@ -40,12 +42,14 @@ router.get('/login', (req, res) => {
 router.post('/login', passport.authenticate('local', 
     {
         successRedirect: "back",
-        failureRedirect: "/login"
+        failureRedirect: "/login",
+        failureFlash: true
     }), function(req, res){ }); // Empty callback to show that it is possible (unnecessary for now)
 
 // logout
 router.get('/logout', (req, res) => {
-    req.logout(); 
+    req.logout();
+    req.flash("error", "You've been logged out");
     res.redirect('/');
 });
 

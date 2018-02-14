@@ -18,12 +18,25 @@ footer a {
 
 
 /* classes sorted alphabetically */
+.comment-row:hover {
+    background-color: #f2f2f2;
+}
+
 .container {
     margin-top: 25px;
 }
 
 .content-container {
     margin-bottom: 50px;
+}
+
+.delete-comment-btn:hover {
+    cursor: pointer;
+}
+
+.delete-comment-form {
+    display: inline;
+    white-space: nowrap;
 }
 
 .navbar-nav .form-control {
@@ -46,14 +59,21 @@ footer a {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    
 }
 
 
 /* Id's sorted alphabetically */
 #comment-text {
     display: inline;
+    white-space: nowrap;
 }
+
+#delete-comment-btn {
+    display: inline;
+    white-space: nowrap;
+}
+
+
 
 #landing {
     font-family: Pacifico;

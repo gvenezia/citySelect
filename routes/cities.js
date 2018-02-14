@@ -95,6 +95,7 @@ router.delete("/:id", middleware.isAuthorizedUser, (req, res) => {
           console.log(err);
           res.redirect('back');
       } else {
+          req.flash("success", "City deleted successfully");
           res.redirect("/cities");
       }
   });

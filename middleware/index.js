@@ -11,7 +11,8 @@ var middlewareObj = {
         if(req.isAuthenticated()){
             next();
         } else { // make sure the else is here, otherwise you'll get a "Can't set headers error" https://stackoverflow.com/questions/7042340/error-cant-set-headers-after-they-are-sent-to-the-client 
-        // if the user isn't logged in, redirect request to the referer
+        // if the user isn't logged in, flash message and redirect request to the referer
+        req.flash("error", "Please login first...");
         res.redirect('back');
         }
     },
@@ -28,11 +29,13 @@ var middlewareObj = {
                     next(); // DON'T RETURN THIS. Caused a CastError problem further down the line
                     
                 } else {
+                    req.flash("error", "Only the creators of a comment can edit it. Please log in as the user who created this comment");
                     res.redirect("back");
                     
                 }
             }); // End Comment.find for logged in user
         } else {
+            req.flash("error", "Only the creator of a comments can edit it. Please log in as the user who created this comment");
             res.redirect("back");
         }
     }, // End checkForAuthorizedUser
@@ -49,11 +52,13 @@ var middlewareObj = {
                     next(); // DON'T RETURN THIS. Caused a CastError problem further down the line
                     
                 } else {
+                    req.flash("error", "Only the creator of a city page can edit it. Please log in as the user who created this city page");
                     res.redirect("back");
                     
                 }
             }); // End City.find for logged in user
         } else {
+            req.flash("error", "Only the creator of a city page can edit it. Please log in as the user who created this city page");
             res.redirect("back");
         }
     }, // End checkForAuthorizedUser

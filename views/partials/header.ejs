@@ -74,3 +74,20 @@
         
     </nav> <!-- End Navbar -->
     
+    <!-- Alert message -->
+    <!-- Only display the container and alerts if there are messages (this prevents the margin-top from creating a gap on the landing page)-->
+    <% if (error.length > 0 || success.length > 0) { %>
+      <div class="container">
+        <% if (error && error.length > 0){ %>
+          <div class="alert alert-danger" role="alert">
+            <%= error %>
+          </div>
+        <% } %>
+        <% if (success && success.length > 0){ %>
+          <div class="alert alert-success" role="alert">
+            <%= success %>
+          </div>
+        <% } %>
+      </div>
+    <% } %>
+    

@@ -2,6 +2,7 @@
 var express         = require("express"), 
     app             = express(),
     bodyParser      = require("body-parser"),
+    flash           = require("connect-flash"),
     methodOverride  = require("method-override"),
     mongoose        = require("mongoose"),
     passport        = require("passport"),
@@ -22,6 +23,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
+app.use(flash());
 
 seedDB();
 
@@ -42,7 +44,9 @@ passport.deserializeUser(User.deserializeUser());
 // ==== set res.locals middleware ====
 // Allows access to the current user on every page of the web site
 app.use(function(req, res, next){
-   res.locals.user = req.user;
+   res.locals.user    = req.user;
+   res.locals.success = req.flash("success");
+   res.locals.error   = req.flash("error");
    next();
 });
 
