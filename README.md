@@ -8,8 +8,9 @@ A city review site that helps users better plan their next vacation or move.
 - Travelers can quickly check different cities to learn more about it and see if there are comments about good places to visit
 - Travelers can share hot tips about where to stay, what to see, and what to do
 - Residents can let others know what it's like to live in a city or area
-- Relocators and can check up on various cities to see what would be the best fit for them, based on a general description and other users' comments
+- Relocators can check up on various cities to see what would be the best fit for them, based on a general description and other users' comments
 - Users can sign-up for an account in order to post comments
+– Signed-in users can edit and delete their comments and posted city pages
 
 ### Technologies Used
 Primarily made with Vanilla JS, MongoDB, Express.js, and Node.js.
