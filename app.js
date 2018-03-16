@@ -18,7 +18,8 @@ var citiesRoutes    = require("./routes/cities"),
     authRoutes      = require("./routes/auth");
 
 // ===============================
-mongoose.connect("mongodb://localhost/citySelect");
+// mongoose.connect("mongodb://localhost/citySelect"); // original local mongoDB
+mongoose.connect("mongodb://user1:1234@ds215709.mlab.com:15709/city-select");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
