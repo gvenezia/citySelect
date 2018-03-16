@@ -3,7 +3,7 @@
 ### What is it?
 A city review site that helps users better plan their next vacation or move.
 
-Check it out [here](https://infinite-mountain-67925.herokuapp.com/)!
+Check it out [here](https://city-select.herokuapp.com/)!
 
 ### User stories
 - Unaccustomed users are greeted by a landing page that gives a short explanation of the website and a link to view all the cities
