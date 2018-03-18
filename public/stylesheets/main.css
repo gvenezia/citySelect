@@ -7,7 +7,6 @@ html {
 body {
     position: relative;
     min-height: 100%;
-    padding-bottom: 0rem;
 }
 
 footer {
@@ -19,8 +18,20 @@ footer {
     color: #C0C5CD;
 }
 
-footer a {
+footer a,
+footer a:hover,
+footer a:visited,
+footer a:active {
+    text-decoration: none;    
+}
+
+footer a,
+footer a:visited{
     color: #C0C5CD;
+}
+
+footer a:hover {
+    color: #FFD6D6;
 }
 
 
@@ -50,7 +61,7 @@ footer a {
     background-color: #DCE2EB;
 }
 
-.navbar-inverse .navbar-brand {
+.navbar-brand {
     font-family: Pacifico;
     font-size: 2.5rem;
     padding: 6px;
@@ -80,30 +91,39 @@ footer a {
     white-space: nowrap;
 }
 
-#landing {
+#landing-header {
     font-family: Pacifico;
+    font-size: 3.5rem;
 }
 
 #landing-container {
+    position: relative;
     margin: 0px;
     padding: 0px;
     width: 100%;
+    max-height: 80%;
+
 }
 
 #landing-image {
     position: relative;
+    
     width: 100%;
-    height: 100%;
-    min-width: 1250px;
+    max-height: 0%;
+    min-width: 1150px;
 }
 
 #landing-text {
    position: absolute; 
-   top: 200px; 
+   top: 100px; 
    left: 0; 
    max-width: 600px;
    margin: 0% 8%;
    color: white;
+}
+
+#landing-text h3 {
+    font-weight: 200;
 }
 
 #main-nav {
@@ -117,4 +137,14 @@ footer a {
 }
 
 @media (max-width: 991px) {
+    
+    
 }
+
+/* Small Devices – Mobile View */
+@media (max-width: 575px){
+    #landing-text {
+        top: 60px; 
+    }
+}
+    
