@@ -1,3 +1,5 @@
+'use strict';
+
 // Assign the required packages to variables
 var express         = require("express"), 
     app             = express(),
