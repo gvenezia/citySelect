@@ -4,15 +4,9 @@ html, body {
 }
 
 footer {
-      position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 1rem;
-    
-    /*position: relative;*/
-    /*width: 100%;*/
-    /*bottom: 0;*/
+    position: relative;
+    width: 100%;
+    bottom: 0;
     text-align: center;
     background-color: #384151;
     color: #C0C5CD;
