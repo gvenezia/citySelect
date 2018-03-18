@@ -1,6 +1,8 @@
 'use strict';
 
-// Assign the required packages to variables
+
+// ============= Variables =============
+// Required packages
 var express         = require("express"), 
     app             = express(),
     bodyParser      = require("body-parser"),
@@ -19,16 +21,17 @@ var citiesRoutes    = require("./routes/cities"),
     commentsRoutes  = require("./routes/comments"),
     authRoutes      = require("./routes/auth");
 
-// ===============================
+// ============= Use, Connect, Set ==================
 // mongoose.connect("mongodb://localhost/citySelect"); // original local mongoDB
 mongoose.connect("mongodb://user1:1234@ds215709.mlab.com:15709/city-select");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
+app.use("/images", express.static(__dirname + "/images"));
 app.use(methodOverride("_method"));
 app.use(flash());
 
-seedDB();
+// seedDB(); // seeds with the data in seed.js
 
 // ======= CONFIG: Passport ============
 app.use(require("express-session")({

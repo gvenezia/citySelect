@@ -3,7 +3,7 @@
 
 <div class="container content-container">
     
-    <div class="container content-container">
+    <div class="container add-city-container">
         <a class="btn btn-primary btn-block" href="/cities/new">Click here to add a city!</a>
     </div>
     
@@ -14,11 +14,25 @@
                 <figure class="figure">
                   <img src="<%= city["image"] %>" class="figure-img img-fluid rounded" alt="A picture of <%= city.name %>">
                   <figcaption class="figure-caption font-weight-bold"> <%= city["name"] %> </figcaption>
-                  <a href="/cities/<%= city._id %>" class="btn btn-sm btn-outline-info">More Info</a> 
+                  <a href="/cities/<%= city._id %>" class="btn btn-md btn-outline-info">More Info</a> 
                 </figure>
             </div>
         <% }); %>
-    </div>
+        
+        <!-- Block to add another city -->
+        <div class="col-md-4 col-sm-6">
+            <figure class="figure">
+              <img id="add-city-image"src="/images/buildings.svg" class="figure-img img-fluid rounded" alt="A picture of a city">
+              <figcaption id="vexels-link" class="figure-caption font-weight-bold"> 
+                  <a target="_blank" href="https://www.vexels.com/vectors/preview/137231/gray-building-city-house">
+                      (Image by Vexels)
+                  </a>
+              </figcaption>
+              <a href="/cities/new" class="btn btn-md btn-outline-info">Add a new city to the list!</a> 
+            </figure>
+        </div>
+        
+    </div> <!-- End Row -->
 </div>
 
 <!-- Footer -->
