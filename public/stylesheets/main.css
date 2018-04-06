@@ -73,18 +73,27 @@ footer a:hover {
     font-family: Pacifico;
     font-size: 2.5rem;
     padding: 6px;
-    background: linear-gradient(to right, #ffeded, white); /* checkfor firefox, IE and the gradient */
-        background-position-x: initial;
-        background-position-y: initial;
-        background-size: initial;
-        background-repeat-x: initial;
-        background-repeat-y: initial;
-        background-attachment: initial;
-        background-origin: initial;
-        background-color: initial;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    
+    /* Background different depending on browser */
+        background: linear-gradient(to right, #ffeded, white);
+            background-position-x: initial;
+            background-position-y: initial;
+            background-size: initial;
+            background-repeat-x: initial;
+            background-repeat-y: initial;
+            background-attachment: initial;
+            background-origin: initial;
+            background-color: initial;
+        
+        background-clip: text;
+            
+        /* Webkit compatibility */
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        
+        /* Firefox and IE override the regular gradient and reverts to the background color */
+        background: -moz-linear-gradient(#384151, #384151);
+        background: -ms-linear-gradient(#384151, #384151);
 } 
 
 
