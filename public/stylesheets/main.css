@@ -91,7 +91,7 @@ footer a:hover {
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         
-        /* Firefox and IE override the regular gradient and reverts to the background color */
+        /* Firefox and IE override the regular gradient and revert to the background color */
         background: -moz-linear-gradient(#384151, #384151);
         background: -ms-linear-gradient(#384151, #384151);
 } 
